@@ -95,8 +95,8 @@ namespace ProjectKinect
 
         private void time_tick()
         {
-
-            Date.Text = System.DateTime.Now.ToString();
+            Date.Text = System.DateTime.Now.ToString("yyyy년 MM월 dd일");
+            Time.Text = System.DateTime.Now.ToString("tt hh:mm:ss");
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
