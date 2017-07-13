@@ -22,7 +22,7 @@
                       HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                       k:KinectRegion.IsHorizontalRailEnabled="true" k:KinectRegion.IsVerticalRailEnabled="true"
                       k:KinectRegion.ZoomMode="Enabled">
-            <Image Stretch="None" Grid.Column="0" Grid.Row="0" Source="/Images/beach.jpg" />
+            <Image Stretch="None" Grid.Column="0" Grid.Row="0"  Source="/Assets/t.jpg" />
         </ScrollViewer>
     </Grid>
 </UserControl>

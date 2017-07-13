@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:ProjectKinect"
         mc:Ignorable="d"
         Title="MainWindow" Height="1920" Width="1080">
@@ -22,8 +21,6 @@
             <TextBlock x:Name="MinTemp" HorizontalAlignment="Left" Margin="39,54,0,0" TextWrapping="Wrap" Text="MinT" VerticalAlignment="Top" Width="34"/>
             <TextBlock HorizontalAlignment="Left" Margin="72,54,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="34"/>
             <TextBlock x:Name="Wind" HorizontalAlignment="Left" Margin="106,54,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="34"/>
-            <TextBlock x:Name="Date"  HorizontalAlignment="Left" Margin="263,493,0,0" VerticalAlignment="Top" />
-            <TextBlock x:Name="Dayofweek" HorizontalAlignment="Left" Height="23" Margin="263,426,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
         </Grid>
     </Grid>
 </Window>
