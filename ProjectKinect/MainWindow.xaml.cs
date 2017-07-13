@@ -24,6 +24,9 @@ namespace ProjectKinect
     {
         public MainWindow()
         {
+            Database database = new Database();
+            database.test();
+            
             Get_Weather();
 
             InitializeComponent();
