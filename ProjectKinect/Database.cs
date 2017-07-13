@@ -25,10 +25,10 @@ namespace ProjectKinect
                 con.Close();
                 Console.WriteLine("DB 연결 실패" + " (" + e.Message + ")");
             }
-                //    finally
-                //    {
-                //        con.Close();
-                //    }
+            //finally
+            //{
+            //    con.Close();
+            //}
         }
 
         public void test()
