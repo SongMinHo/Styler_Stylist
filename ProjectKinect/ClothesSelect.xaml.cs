@@ -127,7 +127,6 @@ namespace ProjectKinect
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.bodyFrameReader != null)
             {
                 this.bodyFrameReader.FrameArrived += this.Reader_FrameArrived;
             }
