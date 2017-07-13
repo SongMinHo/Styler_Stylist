@@ -27,49 +27,6 @@ namespace ProjectKinect
             }
         }
 
-        private List<String> jointList = new List<string>();
-
-        private void AddJointList()
-        {
-            jointList.Add("AnkleLeft");
-            jointList.Add("AnkleRight");
-            jointList.Add("ElbowLeft");
-            jointList.Add("ElbowRight");
-            jointList.Add("FootLeft");
-            jointList.Add("FootRight");
-            jointList.Add("HandLeft");
-            jointList.Add("HandRight");
-            jointList.Add("HandTipLeft");
-            jointList.Add("HandTipRight");
-            jointList.Add("Head");
-            jointList.Add("HipLeft");
-            jointList.Add("HipRight");
-            jointList.Add("KneeLeft");
-            jointList.Add("KneeRight");
-            jointList.Add("Neck");
-            jointList.Add("ShoulderLeft");
-            jointList.Add("ShoulderRight");
-            jointList.Add("SpineBase");
-            jointList.Add("SpineMid");
-            jointList.Add("SpineShoulder");
-            jointList.Add("ThumbLeft");
-            jointList.Add("ThumbRight");
-            jointList.Add("WristLeft");
-            jointList.Add("WristRight");
-        }
-
-        public void InsertPosture(Body body)
-        {
-            ConnectDatabase();
-            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-
-            foreach (JointType jointType in joints.Keys)
-            {
-                CameraSpacePoint position = joints[jointType].Position;
-                String Query = string.Format("INSERT INTO JointPoint VALUES ({1}, {2}, {3}, {4})", jointType, position.X, position.Y, position.Z);
-                MySqlCommand cmd = new MySqlCommand(Query, con);
-                cmd.ExecuteNonQuery();
-            }
-        }
+        
     }
 }
