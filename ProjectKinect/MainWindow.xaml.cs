@@ -30,7 +30,7 @@ namespace ProjectKinect
             Database database = new Database();
             database.test();
             Get_Weather();
-            InitTimer();
+            //InitTimer();
 
             InitializeComponent();
         }
@@ -73,25 +73,25 @@ namespace ProjectKinect
             Dayofweek.Text = weatherDetails.WeatherDay;
         }
 
-        public delegate void TempDelegate();
-        public TempDelegate tempDelegate;
-        Timer timer = null;
+        //public delegate void TempDelegate();
+        //public TempDelegate tempDelegate;
+        //Timer timer = null;
 
-        private void InitTimer()
-        {
-            if (timer != null) return;
-            TimerCallback timerCallback = new TimerCallback(ThreadFunc);
-            timer = new Timer(timerCallback, null, 0, 1000);
-        }
+        //private void InitTimer()
+        //{
+        //    if (timer != null) return;
+        //    TimerCallback timerCallback = new TimerCallback(ThreadFunc);
+        //    timer = new Timer(timerCallback, null, 0, 1000);
+        //}
 
-        private void ThreadFunc(Object stateInfo)
-        {
-            if(this.Dispatcher.Thread != Thread.CurrentThread)
-            {
-                tempDelegate += new TempDelegate(time_tick);
-                Dispatcher.Invoke(DispatcherPriority.Normal, tempDelegate);
-            }
-        }
+        //private void ThreadFunc(Object stateInfo)
+        //{
+        //    if(this.Dispatcher.Thread != Thread.CurrentThread)
+        //    {
+        //        tempDelegate += new TempDelegate(time_tick);
+        //        Dispatcher.Invoke(DispatcherPriority.Normal, tempDelegate);
+        //    }
+        //}
 
         private void time_tick()
         {
