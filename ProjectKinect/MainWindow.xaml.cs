@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace ProjectKinect
 {
@@ -22,12 +24,13 @@ namespace ProjectKinect
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             Database database = new Database();
             database.test();
-            
             Get_Weather();
+            InitTimer();
 
             InitializeComponent();
         }
@@ -51,7 +54,7 @@ namespace ProjectKinect
         }
 
         private async void Get_Weather()
-        { 
+        {
             List<WeatherDetails> weathers = await WeatherHelper.GetWeather();
 
             WeatherDetails weatherDetails = weathers.First();
@@ -67,6 +70,33 @@ namespace ProjectKinect
             MaxTemp.Text = weatherDetails.MaxTemperature;
             MinTemp.Text = weatherDetails.MinTemperature;
             Wind.Text = weatherDetails.WindSpeed;
+            Dayofweek.Text = weatherDetails.WeatherDay;
+        }
+
+        public delegate void TempDelegate();
+        public TempDelegate tempDelegate;
+        Timer timer = null;
+
+        private void InitTimer()
+        {
+            if (timer != null) return;
+            TimerCallback timerCallback = new TimerCallback(ThreadFunc);
+            timer = new Timer(timerCallback, null, 0, 1000);
+        }
+
+        private void ThreadFunc(Object stateInfo)
+        {
+            if (this.Dispatcher.Thread != Thread.CurrentThread)
+            {
+                tempDelegate += new TempDelegate(time_tick);
+                Dispatcher.Invoke(DispatcherPriority.Normal, tempDelegate);
+            }
+        }
+
+        private void time_tick()
+        {
+
+            Date.Text = System.DateTime.Now.ToString();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
