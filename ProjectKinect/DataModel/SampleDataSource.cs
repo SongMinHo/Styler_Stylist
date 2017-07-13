@@ -36,9 +36,9 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
 
         private ObservableCollection<SampleDataCollection> allGroups = new ObservableCollection<SampleDataCollection>();
 
-        private static Uri darkGrayImage = new Uri("Assets/t.jpg", UriKind.Relative);
-        private static Uri mediumGrayImage = new Uri("assets/mediumGray.png", UriKind.Relative);
-        private static Uri lightGrayImage = new Uri("assets/lightGray.png", UriKind.Relative);
+        private static Uri darkGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
+        private static Uri mediumGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
+        private static Uri lightGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
 
 
 
@@ -53,6 +53,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                     "Group-1",
                     "Group Title: 3",
                     "Group Subtitle: 3",
+                    
                     SampleDataSource.mediumGrayImage,
                     "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
             group1.Items.Add(
@@ -100,7 +101,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                         "Group-1-Item-7",
                         "Engagement and Cursor Settings",
                         "",
-                        SampleDataSource.darkGrayImage,
+                         new Uri("/Tracking/Assets/t.jpg", UriKind.Relative),
                         "Enables user to switch between engagement models and cursor visuals.",
                         itemContent,
                         group1,
@@ -1350,6 +1351,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
             this.subtitle = subtitle;
             this.description = description;
             this.imagePath = imagePath;
+
         }
 
         /// <summary>

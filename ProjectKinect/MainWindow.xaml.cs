@@ -54,7 +54,7 @@ namespace ProjectKinect
         }
 
         private async void Get_Weather()
-        { 
+        {
             List<WeatherDetails> weathers = await WeatherHelper.GetWeather();
 
             WeatherDetails weatherDetails = weathers.First();
@@ -86,7 +86,7 @@ namespace ProjectKinect
 
         private void ThreadFunc(Object stateInfo)
         {
-            if(this.Dispatcher.Thread != Thread.CurrentThread)
+            if (this.Dispatcher.Thread != Thread.CurrentThread)
             {
                 tempDelegate += new TempDelegate(time_tick);
                 Dispatcher.Invoke(DispatcherPriority.Normal, tempDelegate);
@@ -96,7 +96,7 @@ namespace ProjectKinect
         private void time_tick()
         {
 
-             Date.Text = System.DateTime.Now.ToString();
+            Date.Text = System.DateTime.Now.ToString();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
