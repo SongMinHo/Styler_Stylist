@@ -25,51 +25,23 @@ namespace ProjectKinect
                 con.Close();
                 Console.WriteLine("DB 연결 실패" + " (" + e.Message + ")");
             }
+                //    finally
+                //    {
+                //        con.Close();
+                //    }
         }
 
-        private List<String> jointList = new List<string>();
-
-        private void AddJointList()
-        {
-            jointList.Add("AnkleLeft");
-            jointList.Add("AnkleRight");
-            jointList.Add("ElbowLeft");
-            jointList.Add("ElbowRight");
-            jointList.Add("FootLeft");
-            jointList.Add("FootRight");
-            jointList.Add("HandLeft");
-            jointList.Add("HandRight");
-            jointList.Add("HandTipLeft");
-            jointList.Add("HandTipRight");
-            jointList.Add("Head");
-            jointList.Add("HipLeft");
-            jointList.Add("HipRight");
-            jointList.Add("KneeLeft");
-            jointList.Add("KneeRight");
-            jointList.Add("Neck");
-            jointList.Add("ShoulderLeft");
-            jointList.Add("ShoulderRight");
-            jointList.Add("SpineBase");
-            jointList.Add("SpineMid");
-            jointList.Add("SpineShoulder");
-            jointList.Add("ThumbLeft");
-            jointList.Add("ThumbRight");
-            jointList.Add("WristLeft");
-            jointList.Add("WristRight");
-        }
-
-        public void InsertPosture(Body body)
+        public void test()
         {
             ConnectDatabase();
-            IReadOnlyDictionary<JointType, Joint> joints = body.Joints;
-
-            foreach (JointType jointType in joints.Keys)
+            String query = "SELECT * FROM Clothes";
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+            while(dataReader.Read())
             {
-                CameraSpacePoint position = joints[jointType].Position;
-                String Query = string.Format("INSERT INTO JointPoint VALUES ({1}, {2}, {3}, {4})", jointType, position.X, position.Y, position.Z);
-                MySqlCommand cmd = new MySqlCommand(Query, con);
-                cmd.ExecuteNonQuery();
+                Console.WriteLine("{0}, {1}, {2}", dataReader["clothesId"], dataReader["name"], dataReader["category"]);
             }
+            con.Close();
         }
     }
 }
