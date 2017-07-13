@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:ProjectKinect"
         mc:Ignorable="d"
         Title="MainWindow" Height="1920" Width="1080">
-    <Grid >
+    
+    <!--background = "black" 나중에 글씨색 하얀색으로-->
+    <Grid>
         <Grid>
             <Button x:Name="test" Content="자세 찍기
                 " HorizontalAlignment="Left" Margin="213,164,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click" Height="18"/>
@@ -14,13 +16,18 @@
             <Button Content="옷 고르기" HorizontalAlignment="Left" Margin="213,258,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_2" Height="21"/>
         </Grid>
 
-        <Grid Margin="378,0,0.4,246.8">
-            <Image x:Name="ImgWeather" HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" VerticalAlignment="Top" Width="46"/>
-            <TextBlock x:Name="CurrentTemp" HorizontalAlignment="Left" Margin="61,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="-0.326,0.186" Height="39" Width="68"/>
-            <TextBlock x:Name="MaxTemp" HorizontalAlignment="Left" Margin="5,54,0,0" TextWrapping="Wrap" Text="MaxT" VerticalAlignment="Top" Width="34"/>
-            <TextBlock x:Name="MinTemp" HorizontalAlignment="Left" Margin="39,54,0,0" TextWrapping="Wrap" Text="MinT" VerticalAlignment="Top" Width="34"/>
-            <TextBlock HorizontalAlignment="Left" Margin="72,54,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="34"/>
-            <TextBlock x:Name="Wind" HorizontalAlignment="Left" Margin="106,54,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="34"/>
+        <Grid Margin="819,0,0.6,1091.4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="153*"/>
+                <RowDefinition Height="320*"/>
+                <RowDefinition Height="326*"/>
+            </Grid.RowDefinitions>
+            <Image x:Name="ImgWeather" HorizontalAlignment="Left" Height="133" Margin="10,10,0,0" VerticalAlignment="Top" Width="234"/>
+            <TextBlock x:Name="CurrentTemp" HorizontalAlignment="Left" Margin="0,10.2,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="-0.326,0.186" Height="140" Width="149" Grid.Row="1"/>
+            <TextBlock x:Name="MaxTemp" HorizontalAlignment="Left" Margin="0,141.2,0,0" TextWrapping="Wrap" Text="MaxT" VerticalAlignment="Top" Width="221" Grid.Row="1" Height="31"/>
+            <TextBlock x:Name="MinTemp" HorizontalAlignment="Left" Margin="0,190.2,0,0" TextWrapping="Wrap" Text="MinT" VerticalAlignment="Top" Width="187" Grid.Row="1" Height="35"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,243.2,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="188" Grid.Row="1" Height="28"/>
+            <TextBlock x:Name="Wind" HorizontalAlignment="Left" Margin="0,291.2,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="188" Grid.Row="1" Height="29" Grid.RowSpan="2"/>
         </Grid>
     </Grid>
 </Window>
