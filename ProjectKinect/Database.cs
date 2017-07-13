@@ -25,8 +25,23 @@ namespace ProjectKinect
                 con.Close();
                 Console.WriteLine("DB 연결 실패" + " (" + e.Message + ")");
             }
+                //    finally
+                //    {
+                //        con.Close();
+                //    }
         }
 
-        
+        public void test()
+        {
+            ConnectDatabase();
+            String query = "SELECT * FROM Clothes";
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            MySqlDataReader dataReader = cmd.ExecuteReader();
+            while(dataReader.Read())
+            {
+                Console.WriteLine("{0}, {1}, {2}", dataReader["clothesId"], dataReader["name"], dataReader["category"]);
+            }
+            con.Close();
+        }
     }
 }
