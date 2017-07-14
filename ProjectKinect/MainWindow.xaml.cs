@@ -19,6 +19,7 @@ using System.Windows.Threading;
 
 namespace ProjectKinect
 {
+
     /// <summary>
     /// MainWindow.xaml에 대한 상호 작용 논리
     /// </summary>
@@ -27,6 +28,7 @@ namespace ProjectKinect
 
         public MainWindow()
         {
+       
             Database database = new Database();
             database.test();
             Get_Weather();
@@ -101,7 +103,7 @@ namespace ProjectKinect
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            ClothesSelect CS = new ClothesSelect();
+            PostureSelect CS = new PostureSelect();
             CS.ShowDialog();
         }
     }

@@ -93,6 +93,9 @@
       <DependentUpon>PostureCapture.xaml</DependentUpon>
     </Compile>
     <Compile Include="Database.cs" />
+    <Compile Include="PostureSelect.xaml.cs">
+      <DependentUpon>PostureSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tracking\Extensions.cs" />
     <Compile Include="Weather\WeatherHelper.cs" />
     <Page Include="ClotheCapture.xaml">
@@ -155,6 +158,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="PostureCapture.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PostureSelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

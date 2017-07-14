@@ -51,6 +51,7 @@
                             </TransformGroup>
                         </Viewbox.RenderTransform>
                         <Image Source="{Binding ImageSource}" Stretch="UniformToFill" />
+                        
                     </Viewbox>
 
   
