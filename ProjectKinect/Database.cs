@@ -119,12 +119,13 @@ namespace ProjectKinect
             connect.Close();
         }
 
-        public ImageSource getImage()
+        
+        public List<ImageSource> getImage()
         {
             try
             {
-                string query = "select image from ClothesPosture where clothesId = 1";
-
+                string query = "select image from ClothesPosture";
+                List<ImageSource> imgList = new List<ImageSource>();
                 sqlcmd = new MySqlCommand(query, connect);
 
                 sqlread = sqlcmd.ExecuteReader();
@@ -136,7 +137,16 @@ namespace ProjectKinect
                     while (sqlread.Read())
                     {
                         imageData = (byte[])sqlread[0];
+
+                        mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+
+                        imageFile = System.Drawing.Image.FromStream(mstream);
+
+                        Bitmap bitmapFile = (Bitmap)imageFile;
+                        var handle = bitmapFile.GetHbitmap();
+                        imgList.Add(Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
                     }
+                    Console.WriteLine("리스트 저장 완료");
                 }
                 catch
                 {
@@ -145,13 +155,7 @@ namespace ProjectKinect
 
                 sqlread.Close();
 
-                mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
-
-                imageFile = System.Drawing.Image.FromStream(mstream);
-
-                Bitmap bitmapFile = (Bitmap)imageFile;
-                var handle = bitmapFile.GetHbitmap();
-                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return imgList;
             }
             catch
             {
