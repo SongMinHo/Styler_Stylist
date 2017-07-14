@@ -17,98 +17,87 @@ namespace ProjectKinect
 {
     class Database
     {
-        private static string strCon = "SERVER = 122.44.13.91; PORT = 11059 ; DATABASE = styler; UID = root; PWD = 1";
-        MySqlConnection con = new MySqlConnection(strCon);
+        static MySqlConnection connect = null;
+        static MySqlCommand sqlcmd = null;
+        static MySqlDataReader sqlread = null;
 
-        public void ConnectDatabase()
+        static System.Drawing.Image imageFile = null;
+
+        static FileStream fstream = null;
+        static BinaryReader binread = null;
+        static MemoryStream mstream = null;
+
+        public Database()
         {
+            string strConn = "Server=122.44.13.91; Port = 11059; Database=styler; Uid=root;Pwd=1;";
+            // Image Insert Ex.
+
             try
             {
-                con.Open();
-                Console.WriteLine("DB 연결 완료");
+                connect = new MySqlConnection(strConn);
+
+                connect.Open();
+
+                Console.WriteLine("DB와 연결 성공");
             }
-            catch (MySqlException e)
+            catch
             {
-                con.Close();
-                Console.WriteLine("DB 연결 실패" + " (" + e.Message + ")");
+                Console.WriteLine("DB와 연결 안됨 Error");
             }
-            //finally
-            //{
-            //    con.Close();
-            //}
         }
 
         public void test()
         {
-            ConnectDatabase();
             String query = "SELECT * FROM Clothes";
-            MySqlCommand cmd = new MySqlCommand(query, con);
+            MySqlCommand cmd = new MySqlCommand(query, connect);
             MySqlDataReader dataReader = cmd.ExecuteReader();
-            while(dataReader.Read())
+            while (dataReader.Read())
             {
                 Console.WriteLine("{0}, {1}, {2}", dataReader["clothesId"], dataReader["name"], dataReader["category"]);
             }
-            con.Close();
+            connect.Close();
         }
 
-        //System.Drawing.Bitmap img;
-        //public System.Drawing.Bitmap test2()
-        //{
-        //    ConnectDatabase();
-        //    String query = "SELECT * FROM Gallery WHERE GALLERYID = 3";
-        //    MySqlCommand cmd = new MySqlCommand(query, con);
-        //    MySqlDataReader dataReader = cmd.ExecuteReader();
-        //    byte[] data = null;
-        //    while (dataReader.Read())
-        //    {
-        //        data = (byte[])dataReader[0];
-        //        using (System.IO.MemoryStream ms = new System.IO.MemoryStream(data))
-        //        {
-        //            img = new System.Drawing.Bitmap(ms);
-        //        }
-        //    }
-
-        //    con.Close();
-        //    return img;
-        //}
-
-       
-
-        public static BitmapImage BitmapImageFromBytes(byte[] bytes)
+        public void getDatabaseImage(System.Windows.Controls.Image img)
         {
-            BitmapImage image = null;
-            MemoryStream stream = null;
             try
             {
-                stream = new MemoryStream(bytes);
-                stream.Seek(0, SeekOrigin.Begin);
-                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-                image = new BitmapImage();
-                image.BeginInit();
-                MemoryStream ms = new MemoryStream();
-                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-                ms.Seek(0, SeekOrigin.Begin);
-                image.StreamSource = ms;
-                image.StreamSource.Seek(0, SeekOrigin.Begin);
-                image.EndInit();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-            finally
-            {
-                stream.Close();
-                stream.Dispose();
-            }
-            return image;
-        }
+                string query = "select image from gallery where galleryid = 3";
 
-        public ImageSource ImageSourceForBitmap(Bitmap bmp)
-        {
-            var handle = bmp.GetHbitmap();
+                sqlcmd = new MySqlCommand(query, connect);
 
-            return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                sqlread = sqlcmd.ExecuteReader();
+
+                byte[] imageData = null; // MySQL에서 데이터를 받아올 byte타입의 배열 객체
+
+                try
+                {
+                    while (sqlread.Read())
+                    {
+                        imageData = (byte[])sqlread[0];
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("변환 중 오류 발생");
+                }
+
+                sqlread.Close();
+
+                mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+
+                imageFile = System.Drawing.Image.FromStream(mstream);
+
+                Bitmap bitmapFile = (Bitmap)imageFile;
+                var handle = bitmapFile.GetHbitmap();
+
+                img.Source =
+                    Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch
+            {
+                Console.WriteLine("변환 실패");
+            }
         }
     }
 }
