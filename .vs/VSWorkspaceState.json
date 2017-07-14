@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ProjectKinect"
+    "\\ProjectKinect",
+    "\\ProjectKinect\\DataModel"
   ],
-  "SelectedNode": "\\ProjectKinect\\MainWindow.xaml",
+  "SelectedNode": "\\ProjectKinect\\Properties",
   "PreviewInSolutionExplorer": false
 }

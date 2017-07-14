@@ -445,3 +445,5 @@ C:\Users\smh06\Source\Repos\Styler_Stylist5\ProjectKinect\obj\Debug\ProjectKinec
 C:\Users\smh06\Source\Repos\Styler_Stylist5\ProjectKinect\obj\Debug\ProjectKinect.csproj.GenerateResource.Cache
 C:\Users\smh06\Source\Repos\Styler_Stylist5\ProjectKinect\obj\Debug\ProjectKinect.exe
 C:\Users\smh06\Source\Repos\Styler_Stylist5\ProjectKinect\obj\Debug\ProjectKinect.pdb
+C:\Users\qedwj\Source\Repos\NewRepo2\Styler_Stylist\ProjectKinect\obj\Debug\PostureSelect.g.cs
+C:\Users\qedwj\Source\Repos\NewRepo2\Styler_Stylist\ProjectKinect\obj\Debug\PostureSelect.baml

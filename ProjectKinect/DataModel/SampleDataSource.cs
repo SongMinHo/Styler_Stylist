@@ -49,6 +49,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
 
             MySqlConnection con = new MySqlConnection(strCon);
             con.Open();
+            MySqlCommand command;
+            MySqlDataAdapter da;
             string itemContent = string.Format(
                                     CultureInfo.CurrentCulture,
                                     "Item Content: {0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}",
@@ -66,6 +68,10 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
 
             for( int i= 0; i < 10; i ++)
             {
+                string sql = " SELECT name FROM clothes WHERE clothesid = " + i;
+                command = new MySqlCommand(sql, con);
+                da= new MySqlDataAdapter(command);
+     
                 group1.Items.Add(
                   new SampleDataItem(
                       "Group-1-Item-"+ i,
