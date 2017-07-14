@@ -14,7 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using ProjectKinect;
+
+using MySql.Data.MySqlClient;
 
 namespace ProjectKinect
 {
@@ -27,14 +28,17 @@ namespace ProjectKinect
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
 
-
-
     /// <summary>
     /// PostureCapture.xaml에 대한 상호 작용 논리
     /// </summary>
     public partial class PostureCapture : Window
     {
         private CoordinateMapper coordinateMapper = null;
+
+        private Database db = null;
+
+        string str;
+
         #region Members
 
         KinectSensor _sensor;
@@ -143,9 +147,6 @@ namespace ProjectKinect
 
         #endregion
 
-        int a;
-
-
         public ImageSource ImageSource
         {
             get
@@ -156,6 +157,8 @@ namespace ProjectKinect
 
         public void Screenshot_Click(object sender, RoutedEventArgs e)
         {
+            DBon();
+
             if (camera.Source != null)
             {
                 BitmapEncoder encoder = new PngBitmapEncoder();
@@ -168,7 +171,10 @@ namespace ProjectKinect
 
                 string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
 
-                using (FileStream fs = new FileStream(path, FileMode.Create))
+                FileStream fs;
+                BinaryReader br;
+
+                using (fs = new FileStream(path, FileMode.Create))
                 {
                     encoder.Save(fs);
                 }
@@ -177,30 +183,34 @@ namespace ProjectKinect
                 //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
                 br = new BinaryReader(fs);
 
-                ImageData = br.ReadBytes((int)fs.Length);
+                byte[] imageData = br.ReadBytes((int)fs.Length);
                 //encoder.Save(fs);
 
-                string dum_name = "옷이라능";
-                string dum_cat = "하의";
-                int dum_posId = 1;
+                int dum_posId = 2;
                 //임시로 이름 / postureId 등이 저장되어 있음
 
-                string query = "call insertpostureimage("+ dum_posId +" , @Image)";
+                string query = "call insertpostureimage(" + dum_posId + " , @Image);";
 
-                cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
-                cmd.Parameters["@Image"].Value = ImageData;
+                db.setCommand(query);
+                db.setParams_InsertPostureImage(imageData);
 
-                if(Database.ExecQuery_withImage(query))
-                {
-                    Console.WriteLine("성공적으로 저장되었습니다.");
-                }
+                // db.getCommand().Parameters.Add("@Image", MySqlDbType.LongBlob);
+                // db.getCommand().Parameters["@Image"].Value = ImageData;
+
+                int RowsAffected = db.ExecQuery_withImage(query);
+
+                if (RowsAffected > 0)
+                { Console.WriteLine("성공적으로 저장되었습니다."); }
                 else
-                {
-                    Console.WriteLine("오류가 발생하였습니다.");
-                }
-
+                { Console.WriteLine("오류가 발생하였습니다."); }
             }
             imagecapture = true;
+        }
+
+        public void DBon()
+        {
+            if (db == null)
+                db = new Database();
         }
     }
 }

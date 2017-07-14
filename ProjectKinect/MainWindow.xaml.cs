@@ -21,6 +21,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
+
 namespace ProjectKinect
 {
 
@@ -29,21 +30,19 @@ namespace ProjectKinect
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
-
             InitializeComponent();
 
             Get_Weather();
             InitTimer();
-            Database database = new Database();
-            database.getDatabaseImage(Img);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            PostureCapture ab = new PostureCapture();
+            PostureCapture ab = new PostureCapture(); ;
 
             ab.ShowDialog();
         }
