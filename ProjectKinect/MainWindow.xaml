@@ -28,13 +28,11 @@
             <Button Content="옷 고르기" HorizontalAlignment="Left" Margin="421,773.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_2" Height="21" Grid.Row="1" Grid.Column="1"/>
             <TextBlock x:Name="Date"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="506" Margin="40,35,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="36"/>
             <TextBlock x:Name="Time"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="292" Margin="40,109.2,0,0" Grid.ColumnSpan="2" FontSize="48" Grid.Row="1" TextDecorations="{x:Null}"/>
-            <TextBlock x:Name="Dayofweek" Margin="55,34.2,741.6,1721.4" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Stretch" Foreground="White" RenderTransformOrigin="0.19,-1.212" Grid.Row="1" FontSize="48" TextAlignment="Center" Grid.ColumnSpan="2"/>
+            <TextBlock x:Name="Dayofweek" Margin="9.4,34.2,709.6,1721.4" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Stretch" Foreground="White" RenderTransformOrigin="0.19,-1.212" Grid.Row="1" FontSize="48" Grid.Column="1"/>
             <TextBlock Text="최고" Grid.Column="1" Margin="693.4,109.2,257.6,1702.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
             <TextBlock Text="최저" Grid.Column="1" Margin="786.4,109.2,164.6,1702.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
             <TextBlock Text="현재기온" Grid.Column="1" Margin="872.4,1.2,60.6,1810.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
             <TextBlock Text="풍속" Grid.Column="1" Margin="926.4,109.2,24.6,1702.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
-            <Image x:Name="Img" HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="183" Margin="103.4,361.2,0,0" Grid.Column="1" Grid.Row="1"/>
-
         </Grid>
 
         <Grid Margin="589.2,28,-400.4,220.6" Grid.Column="1" Grid.ColumnSpan="2">
@@ -43,6 +41,7 @@
             <TextBlock x:Name="MaxTemp" HorizontalAlignment="Left" Margin="-3,145,0,0" TextWrapping="Wrap" Text="MaxT" VerticalAlignment="Top" Width="97" Foreground="White" FontSize="30"/>
             <TextBlock x:Name="MinTemp" HorizontalAlignment="Left" Margin="94,145,0,0" TextWrapping="Wrap" Text="MinT" VerticalAlignment="Top" Width="89" Foreground="White" FontSize="30"/>
             <TextBlock x:Name="Wind" HorizontalAlignment="Left" Margin="202,145,0,0" TextWrapping="Wrap" Text="Wind:" VerticalAlignment="Top" Width="123" Foreground="White" FontSize="30"/>
+
         </Grid>
     </Grid>
 </Window>
