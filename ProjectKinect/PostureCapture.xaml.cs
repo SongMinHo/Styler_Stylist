@@ -156,51 +156,51 @@ namespace ProjectKinect
 
         public void Screenshot_Click(object sender, RoutedEventArgs e)
         {
-            if (camera.Source != null)
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                BitmapSource image = (BitmapSource)camera.Source;
-                // create frame from the writable bitmap and add to encoder
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+            //if (camera.Source != null)
+            //{
+            //    BitmapEncoder encoder = new PngBitmapEncoder();
+            //    BitmapSource image = (BitmapSource)camera.Source;
+            //    // create frame from the writable bitmap and add to encoder
+            //    encoder.Frames.Add(BitmapFrame.Create(image));
+            //    string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            //    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-                string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
+            //    string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
 
-                using (FileStream fs = new FileStream(path, FileMode.Create))
-                {
-                    encoder.Save(fs);
-                }
+            //    using (FileStream fs = new FileStream(path, FileMode.Create))
+            //    {
+            //        encoder.Save(fs);
+            //    }
 
-                fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-                //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-                br = new BinaryReader(fs);
+            //    fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+            //    //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+            //    br = new BinaryReader(fs);
 
-                ImageData = br.ReadBytes((int)fs.Length);
-                //encoder.Save(fs);
+            //    ImageData = br.ReadBytes((int)fs.Length);
+            //    //encoder.Save(fs);
 
-                string dum_name = "옷이라능";
-                string dum_cat = "하의";
-                int dum_posId = 1;
-                //임시로 이름 / postureId 등이 저장되어 있음
+            //    string dum_name = "옷이라능";
+            //    string dum_cat = "하의";
+            //    int dum_posId = 1;
+            //    //임시로 이름 / postureId 등이 저장되어 있음
 
-                string query = "call insertpostureimage("+ dum_posId +" , @Image)";
+            //    string query = "call insertpostureimage(" + dum_posId + " , @Image)";
 
-                cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
-                cmd.Parameters["@Image"].Value = ImageData;
+            //    cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
+            //    cmd.Parameters["@Image"].Value = ImageData;
 
-                if(Database.ExecQuery_withImage(query))
-                {
-                    Console.WriteLine("성공적으로 저장되었습니다.");
-                }
-                else
-                {
-                    Console.WriteLine("오류가 발생하였습니다.");
-                }
+            //    if (Database.ExecQuery_withImage(query))
+            //    {
+            //        Console.WriteLine("성공적으로 저장되었습니다.");
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("오류가 발생하였습니다.");
+            //    }
 
-            }
-            imagecapture = true;
+            //}
+            //imagecapture = true;
         }
     }
 }

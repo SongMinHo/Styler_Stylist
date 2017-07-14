@@ -37,7 +37,6 @@ namespace ProjectKinect
             Get_Weather();
             InitTimer();
             Database database = new Database();
-            database.getDatabaseImage(Img, 0, "gallery");
             database.getTableRowsCount("gallery");
             database.closeConnect();
         }
