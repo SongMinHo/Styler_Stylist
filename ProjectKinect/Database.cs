@@ -3,7 +3,6 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,25 +12,69 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+
 namespace ProjectKinect
 {
     class Database
     {
-        static MySqlConnection connect = null;
-        static MySqlCommand sqlcmd = null;
-        static MySqlDataReader sqlread = null;
+        private string strConn = "Server=122.44.13.91; Port = 11059; Database=styler; Uid=root;Pwd=1;";
+
+        private static MySqlConnection connect = null;
+        private static MySqlCommand sqlcmd = null;
+
+        static MySqlDataReader sqlreader = null;
 
         static System.Drawing.Image imageFile = null;
 
         static FileStream fstream = null;
-        static BinaryReader binread = null;
+        static BinaryReader breader = null;
         static MemoryStream mstream = null;
+
+        public MySqlConnection getConnection()
+        {
+            return connect;
+        }
+
+        public MySqlCommand getCommand()
+        {
+            return sqlcmd;
+        }
+
+        public void setCommand(string query)
+        {
+            if(sqlcmd != null)
+                sqlcmd = null;
+            sqlcmd = new MySqlCommand(query, connect);
+        }
+
+        public void setParams_InsertPostureImage(Byte[] imageData) // Parameter 설정.
+        {
+            sqlcmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
+            sqlcmd.Parameters["@Image"].Value = imageData;
+        }
+
+        public MySqlDataReader getDataReader()
+        {
+            return sqlreader;
+        }
+
+        public FileStream getFileStream()
+        {
+            return fstream;
+        }
+
+        public BinaryReader getBinaryReader()
+        {
+            return breader;
+        }
+
+        public MemoryStream getMemoryStream()
+        {
+            return mstream;
+        }
 
         public Database()
         {
-            string strConn = "Server=122.44.13.91; Port = 11059; Database=styler; Uid=root;Pwd=1;";
-            // Image Insert Ex.
-
             try
             {
                 connect = new MySqlConnection(strConn);
@@ -46,34 +89,47 @@ namespace ProjectKinect
             }
         }
 
-        public void test()
+        public bool ExecQuery(string query)
         {
-            String query = "SELECT * FROM Clothes";
-            MySqlCommand cmd = new MySqlCommand(query, connect);
-            MySqlDataReader dataReader = cmd.ExecuteReader();
-            while (dataReader.Read())
-            {
-                Console.WriteLine("{0}, {1}, {2}", dataReader["clothesId"], dataReader["name"], dataReader["category"]);
-            }
+            sqlcmd = new MySqlCommand(query, connect);
+
+            sqlreader = sqlcmd.ExecuteReader();
+
+
+
+            return true;
         }
 
-        public void getDatabaseImage(System.Windows.Controls.Image img, int index, String tableName)
+        public int ExecQuery_withImage(string query)
+        {
+                return sqlcmd.ExecuteNonQuery();
+        }
+
+        /*
+         * {
+         *  mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+            Console.WriteLine("변환 성공");
+            return System.Drawing.Image.FromStream(mstream);
+            }
+        */
+
+        public void getDatabaseImage(System.Windows.Controls.Image img)
         {
             try
             {
-                string query = "select image from " + tableName + " where galleryid = 3";
+                string query = "select image from gallery where galleryid = 3";
 
                 sqlcmd = new MySqlCommand(query, connect);
 
-                sqlread = sqlcmd.ExecuteReader();
+                sqlreader = sqlcmd.ExecuteReader();
 
                 byte[] imageData = null; // MySQL에서 데이터를 받아올 byte타입의 배열 객체
 
                 try
                 {
-                    while (sqlread.Read())
+                    while (sqlreader.Read())
                     {
-                        imageData = (byte[])sqlread[index];
+                        imageData = (byte[])sqlreader[0];
                     }
                 }
                 catch
@@ -81,7 +137,7 @@ namespace ProjectKinect
                     Console.WriteLine("변환 중 오류 발생");
                 }
 
-                sqlread.Close();
+                sqlreader.Close();
 
                 mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
 
@@ -98,70 +154,9 @@ namespace ProjectKinect
                 Console.WriteLine("변환 실패");
             }
         }
-
-        public void getTableRowsCount(String tableName)
-        {
-            String count = null;
-
-            String query = "CALL GetCount ('" + tableName + "');";
-            sqlcmd = new MySqlCommand(query, connect);
-            sqlread = sqlcmd.ExecuteReader();
-            while (sqlread.Read())
-            {
-                Console.WriteLine("{0}",sqlread["count"]);
-                // count = Convert.ToString(dataReader["count"]);
-            }
-            //return count;
-        }
-
-        public void closeConnect()
+        public void CloseDB()
         {
             connect.Close();
-        }
-
-        
-        public List<ImageSource> getImage()
-        {
-            try
-            {
-                string query = "select image from ClothesPosture";
-                List<ImageSource> imgList = new List<ImageSource>();
-                sqlcmd = new MySqlCommand(query, connect);
-
-                sqlread = sqlcmd.ExecuteReader();
-
-                byte[] imageData = null; // MySQL에서 데이터를 받아올 byte타입의 배열 객체
-
-                try
-                {
-                    while (sqlread.Read())
-                    {
-                        imageData = (byte[])sqlread[0];
-
-                        mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
-
-                        imageFile = System.Drawing.Image.FromStream(mstream);
-
-                        Bitmap bitmapFile = (Bitmap)imageFile;
-                        var handle = bitmapFile.GetHbitmap();
-                        imgList.Add(Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
-                    }
-                    Console.WriteLine("리스트 저장 완료");
-                }
-                catch
-                {
-                    Console.WriteLine("변환 중 오류 발생");
-                }
-
-                sqlread.Close();
-
-                return imgList;
-            }
-            catch
-            {
-                Console.WriteLine("변환 실패");
-                return null;
-            }
         }
     }
 }
