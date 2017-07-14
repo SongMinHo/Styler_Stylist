@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\smh06\Source\Repos\Styler_Stylist\ProjectKinect\obj\Debug\
+C:\Users\LJG\Source\Repos\Styler_Stylist\ProjectKinect\obj\Debug\
 ProjectKinect
 none
 false
 DEBUG;TRACE
-C:\Users\smh06\Source\Repos\Styler_Stylist\ProjectKinect\App.xaml
+C:\Users\LJG\Source\Repos\Styler_Stylist\ProjectKinect\App.xaml
 141866494852
 
-28-1281167117
-20245008277
+28-593050133
+211824474119
 ClotheCapture.xaml;ClothesSelect.xaml;Common\StandardStyles.xaml;HandPointers\HandPointerStyles.xaml;MainWindow.xaml;Pages\ButtonSample.xaml;Pages\CheckBoxRadioButtonSample.xaml;Pages\EngagementSettings.xaml;Pages\ItemsControlsSample.xaml;Pages\KinectPointerPointSample.xaml;Pages\ScrollViewerSample.xaml;Pages\SliderSample.xaml;PostureCapture.xaml;PostureSelect.xaml;
 
 True

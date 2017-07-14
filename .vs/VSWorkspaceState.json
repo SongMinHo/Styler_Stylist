@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\ProjectKinect",
-    "\\ProjectKinect\\DataModel"
+    "\\ProjectKinect"
   ],
-  "SelectedNode": "\\ProjectKinect\\Properties",
+  "SelectedNode": "\\ProjectKinect.sln",
   "PreviewInSolutionExplorer": false
 }
