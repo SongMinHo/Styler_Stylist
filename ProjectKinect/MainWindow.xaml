@@ -34,7 +34,6 @@
             <TextBlock Text="현재기온" Grid.Column="1" Margin="872.4,1.2,60.6,1810.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
             <TextBlock Text="풍속" Grid.Column="1" Margin="926.4,109.2,24.6,1702.4" Grid.Row="1" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
             <Image x:Name="Img" HorizontalAlignment="Left" Height="121" VerticalAlignment="Top" Width="183" Margin="103.4,361.2,0,0" Grid.Column="1" Grid.Row="1"/>
-
         </Grid>
 
         <Grid Margin="589.2,28,-400.4,220.6" Grid.Column="1" Grid.ColumnSpan="2">
