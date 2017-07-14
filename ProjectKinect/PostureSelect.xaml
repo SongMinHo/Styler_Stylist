@@ -15,7 +15,7 @@
         FontFamily="Segoe UI"
         WindowState="Maximized"
         >
-    
+
     <k:KinectRegion x:Name="kinectRegion">
         <Grid>
             <Grid.RowDefinitions>
@@ -55,4 +55,3 @@
         </Grid>
     </k:KinectRegion>
 </Window>
-

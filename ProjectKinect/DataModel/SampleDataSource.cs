@@ -239,10 +239,12 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
         private string content = string.Empty;
         private SampleDataCollection group;
         private Type navigationPage;
+        private ImageSource imageSource;
 
         public SampleDataItem(string uniqueId, string title, string subtitle, ImageSource imageSource, string description, string content, SampleDataCollection group)
             : base(uniqueId, title, subtitle, imageSource, description)
         {
+            this.imageSource = imageSource;
             this.content = content;
             this.group = group;
             this.navigationPage = null;
@@ -262,9 +264,16 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
         public SampleDataItem(string uniqueId, string title, string subtitle, ImageSource imageSource, string description, string content, SampleDataCollection group, Type navigationPage)
             : base(uniqueId, title, subtitle, imageSource, description)
         {
+            this.imageSource = imageSource;
             this.content = content;
             this.group = group;
             this.navigationPage = navigationPage;
+        }
+
+        public ImageSource ImageSource
+        {
+            get { return this.imageSource; }
+            set { this.SetProperty(ref this.imageSource, value); }
         }
 
         public string Content
