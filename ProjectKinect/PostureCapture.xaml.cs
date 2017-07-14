@@ -1,4 +1,4 @@
-﻿using Microsoft.Kinect;
+﻿ using Microsoft.Kinect;
 using ProjectKinect.HandTracking;
 using System;
 using System.Collections.Generic;

@@ -55,14 +55,75 @@ namespace ProjectKinect
             {
                 Console.WriteLine("{0}, {1}, {2}", dataReader["clothesId"], dataReader["name"], dataReader["category"]);
             }
-            connect.Close();
         }
 
-        public void getDatabaseImage(System.Windows.Controls.Image img)
+        public void getDatabaseImage(System.Windows.Controls.Image img, int index, String tableName)
         {
             try
             {
-                string query = "select image from gallery where galleryid = 3";
+                string query = "select image from " + tableName + " where galleryid = 3";
+
+                sqlcmd = new MySqlCommand(query, connect);
+
+                sqlread = sqlcmd.ExecuteReader();
+
+                byte[] imageData = null; // MySQL에서 데이터를 받아올 byte타입의 배열 객체
+
+                try
+                {
+                    while (sqlread.Read())
+                    {
+                        imageData = (byte[])sqlread[index];
+                    }
+                }
+                catch
+                {
+                    Console.WriteLine("변환 중 오류 발생");
+                }
+
+                sqlread.Close();
+
+                mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+
+                imageFile = System.Drawing.Image.FromStream(mstream);
+
+                Bitmap bitmapFile = (Bitmap)imageFile;
+                var handle = bitmapFile.GetHbitmap();
+
+                img.Source =
+                    Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch
+            {
+                Console.WriteLine("변환 실패");
+            }
+        }
+
+        public void getTableRowsCount(String tableName)
+        {
+            String count = null;
+
+            String query = "CALL GetCount ('" + tableName + "');";
+            sqlcmd = new MySqlCommand(query, connect);
+            sqlread = sqlcmd.ExecuteReader();
+            while (sqlread.Read())
+            {
+                Console.WriteLine("{0}",sqlread["count"]);
+                // count = Convert.ToString(dataReader["count"]);
+            }
+            //return count;
+        }
+
+        public void closeConnect()
+        {
+            connect.Close();
+        }
+
+        public ImageSource getImage()
+        {
+            try
+            {
+                string query = "select image from ClothesPosture where clothesId = 1";
 
                 sqlcmd = new MySqlCommand(query, connect);
 
@@ -90,13 +151,12 @@ namespace ProjectKinect
 
                 Bitmap bitmapFile = (Bitmap)imageFile;
                 var handle = bitmapFile.GetHbitmap();
-
-                img.Source =
-                    Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                return Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
             }
             catch
             {
                 Console.WriteLine("변환 실패");
+                return null;
             }
         }
     }
