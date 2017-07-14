@@ -17,6 +17,8 @@ namespace ProjectKinect
 {
     class Database
     {
+        private string strConn = "Server=122.44.13.91; Port = 11059; Database=styler; Uid=root;Pwd=1;";
+
         static MySqlConnection connect = null;
         static MySqlCommand sqlcmd = null;
         static MySqlDataReader sqlread = null;
@@ -26,6 +28,50 @@ namespace ProjectKinect
         static FileStream fstream = null;
         static BinaryReader binread = null;
         static MemoryStream mstream = null;
+
+        public MySqlConnection getConnection()
+        {
+            return connect;
+        }
+
+        public MySqlCommand getCommand()
+        {
+            return sqlcmd;
+        }
+
+        public void setCommand(string query)
+        {
+            if (sqlcmd != null)
+                sqlcmd = null;
+            sqlcmd = new MySqlCommand(query, connect);
+        }
+
+        public void setParams_InsertPostureImage(Byte[] imageData) // Parameter 설정.
+        {
+            sqlcmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
+            sqlcmd.Parameters["@Image"].Value = imageData;
+        }
+
+        public MySqlDataReader getDataReader()
+        {
+            return sqlread;
+        }
+
+        public FileStream getFileStream()
+        {
+            return fstream;
+        }
+
+        public BinaryReader getBinaryReader()
+        {
+            return binread;
+        }
+
+        public MemoryStream getMemoryStream()
+        {
+            return mstream;
+        }
+
 
         public Database()
         {
@@ -162,6 +208,22 @@ namespace ProjectKinect
                 Console.WriteLine("변환 실패");
                 return null;
             }
+        }
+
+        public bool ExecQuery(string query)
+        {
+            sqlcmd = new MySqlCommand(query, connect);
+
+            sqlread = sqlcmd.ExecuteReader();
+
+
+
+            return true;
+        }
+
+        public int ExecQuery_withImage(string query)
+        {
+            return sqlcmd.ExecuteNonQuery();
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace ProjectKinect
 {
@@ -29,6 +30,9 @@ namespace ProjectKinect
     public partial class ClotheCapture : Window
     {
         private CoordinateMapper coordinateMapper = null;
+
+        private Database db = null;
+
         #region Members
 
         KinectSensor _sensor;
@@ -171,29 +175,77 @@ namespace ProjectKinect
 
         public void Screenshot_Click(object sender, RoutedEventArgs e)
         {
-            //    if (camera.Source != null)
-            //    {
-            //        BitmapEncoder encoder = new PngBitmapEncoder();
-            //        BitmapSource image = (BitmapSource)camera.Source;
-            //        // create frame from the writable bitmap and add to encoder
-            //        encoder.Frames.Add(BitmapFrame.Create(image));
-            //        string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+                if (camera.Source != null)
+                {
+                    BitmapEncoder encoder = new PngBitmapEncoder();
+                    BitmapSource image = (BitmapSource)camera.Source;
+                    // create frame from the writable bitmap and add to encoder
+                    encoder.Frames.Add(BitmapFrame.Create(image));
+                    string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
 
-            //        string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
-            //        string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
+                    string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
 
-            //        using (FileStream fs = new FileStream(path, FileMode.Create))
-            //        {
-            //            encoder.Save(fs);
-            //        }
+                    FileStream fs;
+                    BinaryReader br;
 
-            //         fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            //            //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-            //            br = new BinaryReader(fs);
+                    using (fs = new FileStream(path, FileMode.Create))
+                    {
+                        encoder.Save(fs);
+                    }
 
-            //            ImageData = br.ReadBytes((int)fs.Length);
-            //            //encoder.Save(fs);
+                    fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                    //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+                    br = new BinaryReader(fs);
+
+                    byte[] ImageData = br.ReadBytes((int)fs.Length);
+                    //encoder.Save(fs);
+
+                    string dum_name = "옷이라능";
+                    string dum_cat = "하의";
+                    int dum_posId = 1;
+                    //임시로 이름 / postureId 등이 저장되어 있음
+
+                    string query = "call insertclothesimage" +
+                     "(" + dum_name + " , " + dum_cat + " , @Image , " + dum_posId + ");";
+
+                    db.getCommand().Parameters.Add("@Image", MySqlDbType.LongBlob);
+                    db.getCommand().Parameters["@Image"].Value = ImageData;
+
+                    int RowsAffected = db.ExecQuery_withImage(query);
+
+                    if (RowsAffected > 0)
+                    { Console.WriteLine("성공적으로 저장되었습니다.");
+                    }
+                    else
+                    { Console.WriteLine("오류가 발생하였습니다.");
+                    }
+                }
+                imagecapture = true;
+
+                /*
+                BitmapEncoder encoder = new PngBitmapEncoder();
+                BitmapSource image = (BitmapSource)camera.Source;
+                // create frame from the writable bitmap and add to encoder
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+
+                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+
+                string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
+
+                using (FileStream fs = new FileStream(path, FileMode.Create))
+                {
+                    encoder.Save(fs);
+                }
+
+                fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+                br = new BinaryReader(fs);
+
+                byte[] ImageData = br.ReadBytes((int)fs.Length);
+                //encoder.Save(fs);
 
             //            string dum_name = "옷이라능";
             //            string dum_cat = "하의";
@@ -203,7 +255,7 @@ namespace ProjectKinect
             //            string query = "call insertclothesimage"+
             //                "("+ dum_name +" , "+ dum_cat +" , @Image , "+ dum_posId +")";
 
-            //            cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
+            //cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
             //            cmd.Parameters["@Image"].Value = ImageData;
 
             //            if(Database.ExecQuery_withImage(query))
@@ -216,6 +268,7 @@ namespace ProjectKinect
             //            }
             //    }
             //    imagecapture = true;
+            */
         }
     }
 }

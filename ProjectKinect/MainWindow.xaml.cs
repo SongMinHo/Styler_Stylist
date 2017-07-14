@@ -36,9 +36,9 @@ namespace ProjectKinect
 
             Get_Weather();
             InitTimer();
-            Database database = new Database();
-            database.getTableRowsCount("gallery");
-            database.closeConnect();
+            //Database database = new Database();
+            //database.getTableRowsCount("gallery");
+            //database.closeConnect();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
