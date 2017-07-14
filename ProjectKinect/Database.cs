@@ -99,5 +99,40 @@ namespace ProjectKinect
                 Console.WriteLine("변환 실패");
             }
         }
+
+        public Image ExecQuery(string query)
+        {
+            sqlcmd = new MySqlCommand(query, connect);
+
+            sqlread = sqlcmd.ExecuteReader();
+
+
+
+            return image;
+        }
+
+        public boolean ExecQuery_withImage()
+        {
+            sqlcmd = new MySqlCommand(query, connect);
+
+            try
+            {
+                sqlread = sqlcmd.ExecuteNonQuery();
+            }            
+            catch
+            {
+                return false;
+            }
+            finally
+            {sqlread.Close();}
+            return true;
+        }
+        /*
+         * {
+         *  mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+            Console.WriteLine("변환 성공");
+            return System.Drawing.Image.FromStream(mstream);
+            }
+        */
     }
 }

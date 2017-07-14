@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ProjectKinect;
 
 namespace ProjectKinect
 {
@@ -172,6 +173,31 @@ namespace ProjectKinect
                     encoder.Save(fs);
                 }
 
+                fs = new FileStream(path, FileMode.Open, FileAccess.Read);
+                //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+                br = new BinaryReader(fs);
+
+                ImageData = br.ReadBytes((int)fs.Length);
+                //encoder.Save(fs);
+
+                string dum_name = "옷이라능";
+                string dum_cat = "하의";
+                int dum_posId = 1;
+                //임시로 이름 / postureId 등이 저장되어 있음
+
+                string query = "call insertpostureimage("+ dum_posId +" , @Image)";
+
+                cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
+                cmd.Parameters["@Image"].Value = ImageData;
+
+                if(Database.ExecQuery_withImage(query))
+                {
+                    Console.WriteLine("성공적으로 저장되었습니다.");
+                }
+                else
+                {
+                    Console.WriteLine("오류가 발생하였습니다.");
+                }
 
             }
             imagecapture = true;
