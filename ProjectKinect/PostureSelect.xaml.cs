@@ -24,12 +24,17 @@ namespace ProjectKinect
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ButtonClick(object sender, RoutedEventArgs e)
         {
-           
-                ClothesSelect CS = new ClothesSelect();
-                CS.ShowDialog();
-            
+
+        }
+
+
+
+        private void GoBack(object sender, RoutedEventArgs e)
+        {
+            backButton.Visibility = System.Windows.Visibility.Hidden;
+            navigationRegion.Content = this.kinectRegionGrid;
         }
     }
 }
