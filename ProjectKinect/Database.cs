@@ -41,6 +41,8 @@ namespace ProjectKinect
 
         public void setCommand(string query)
         {
+            if (sqlread != null)
+                sqlread.Close();
             if (sqlcmd != null)
                 sqlcmd = null;
             sqlcmd = new MySqlCommand(query, connect);
@@ -103,6 +105,7 @@ namespace ProjectKinect
             }
         }
 
+
         public void getDatabaseImage(System.Windows.Controls.Image img, int index, String tableName)
         {
             try
@@ -154,7 +157,7 @@ namespace ProjectKinect
             sqlread = sqlcmd.ExecuteReader();
             while (sqlread.Read())
             {
-                Console.WriteLine("{0}",sqlread["count"]);
+                Console.WriteLine("{0}", sqlread["count"]);
                 // count = Convert.ToString(dataReader["count"]);
             }
             //return count;
@@ -210,19 +213,73 @@ namespace ProjectKinect
             }
         }
 
-        public bool ExecQuery(string query)
+        #region IMSI
+
+        public List<ImageSource> getImage(string query)
         {
-            sqlcmd = new MySqlCommand(query, connect);
+            try
+            {
+                List<ImageSource> imgList = new List<ImageSource>();
+                sqlcmd = new MySqlCommand(query, connect);
 
-            sqlread = sqlcmd.ExecuteReader();
+                sqlread = sqlcmd.ExecuteReader();
 
+                byte[] imageData = null; // MySQL에서 데이터를 받아올 byte타입의 배열 객체
 
+                try
+                {
+                    while (sqlread.Read())
+                    {
+                        imageData = (byte[])sqlread[0];
 
-            return true;
+                        mstream = new MemoryStream(imageData); // imageData를 MemoryStream에 넣음.
+
+                        imageFile = System.Drawing.Image.FromStream(mstream);
+
+                        Bitmap bitmapFile = (Bitmap)imageFile;
+                        var handle = bitmapFile.GetHbitmap();
+                        imgList.Add(Imaging.CreateBitmapSourceFromHBitmap(handle, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions()));
+                    }
+                    Console.WriteLine("리스트 저장 완료");
+                }
+                catch
+                {
+                    Console.WriteLine("변환 중 오류 발생");
+                }
+
+                sqlread.Close();
+
+                return imgList;
+            }
+            catch
+            {
+                Console.WriteLine("변환 실패");
+                return null;
+            }
+        }
+        #endregion
+
+        public int ExecQuery()
+        {
+
+            return sqlcmd.ExecuteNonQuery();
         }
 
-        public int ExecQuery_withImage(string query)
+        public void ExecQueryDirect()
         {
+            sqlcmd.ExecuteNonQuery();
+        }
+
+        public MySqlDataReader ExecQueryWithAnswer()
+        {
+            sqlread = sqlcmd.ExecuteReader();
+
+            return sqlread;
+        }
+
+        public int ExecQuery_withImage()
+        {
+            sqlread = null;
             return sqlcmd.ExecuteNonQuery();
         }
     }

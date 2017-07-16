@@ -21,7 +21,7 @@
             </Grid.RowDefinitions>
             <StackPanel Margin="20,20,20,20.4" Grid.RowSpan="2">
                 <StackPanel>
-                    <TextBlock Text="Right hand state:" Style="{StaticResource TitleStyle}" />
+                    <TextBlock Text="맞출 부위" Style="{StaticResource TitleStyle}" />
                     <TextBlock Name="tblRightHandState" Text="-" Style="{StaticResource StateStyle}" />
                 </StackPanel>
                 <StackPanel Margin="0,50,0,0">
@@ -29,7 +29,8 @@
                     <TextBlock Name="tblLeftHandState" Text="-" Style="{StaticResource StateStyle}" />
                 </StackPanel>
             </StackPanel>
-            <Image HorizontalAlignment="Left" Height="222" Margin="119,450,0,0" VerticalAlignment="Top" Width="191" Source="assets/t.jpg" />
+            <Image x:Name="postureImage" HorizontalAlignment="Left" Height="222" Margin="119,450,0,0" VerticalAlignment="Top" Width="191" Source="{Binding ImageSource}" />
+           
             <Button x:Name="Screenshot"  Content="Screenshot" HorizontalAlignment="Left" Margin="131,710,0,0" VerticalAlignment="Top" Width="140" Height="40" Click="Screenshot_Click"/>
         </Grid>
     </Grid>

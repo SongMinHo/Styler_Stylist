@@ -39,6 +39,8 @@
 
             <ContentControl Grid.Row="1" x:Name="navigationRegion" Margin="10,0,10,0">
                 <Grid x:Name="kinectRegionGrid" Height="1920" Margin="0,0,0.0,0">
+
+
                     <Viewbox VerticalAlignment="top" Height="1080" Width="1700" Margin="0,0,0.0,0">
                         <Viewbox.RenderTransform>
                             <TransformGroup>
@@ -68,6 +70,7 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                     </ScrollViewer>
+                    <Image x:Name="shirtImage"  Source="{Binding ImageSource}" Stretch="None" Margin="0,0,572.6,845" />
                 </Grid>
             </ContentControl>
         </Grid>

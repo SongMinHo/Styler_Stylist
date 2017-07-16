@@ -1,4 +1,4 @@
-﻿ using Microsoft.Kinect;
+﻿using Microsoft.Kinect;
 using ProjectKinect.HandTracking;
 using System;
 using System.Collections.Generic;
@@ -28,8 +28,6 @@ namespace ProjectKinect
     using System.Windows.Media.Imaging;
     using Microsoft.Kinect;
 
-
-
     /// <summary>
     /// PostureCapture.xaml에 대한 상호 작용 논리
     /// </summary>
@@ -38,6 +36,9 @@ namespace ProjectKinect
         private CoordinateMapper coordinateMapper = null;
 
         private Database db = null;
+
+      //  private static CBody cBody; // 캡쳐의 순간, 모든 좌표값을 저장해줄 변수.
+
         #region Members
 
         KinectSensor _sensor;
@@ -49,6 +50,17 @@ namespace ProjectKinect
         #endregion
 
         #region Constructor
+
+        /*
+        string[] jointName =
+        {
+            "SpineBase", "SpineMid", "Neck", "Head", "ShoulderLeft",
+            "ElbowLeft", "WristLeft", "HandLeft", "ShoulderRight", "ElbowRight",
+            "WristRight", "HandRight", "HipLeft", "KneeLeft", "AnkleLeft",
+            "FootLeft", "", "", "", "",
+            "", "", "", "", ""
+        };
+        */
 
         public PostureCapture()
         {
@@ -126,28 +138,115 @@ namespace ProjectKinect
                                 canvas.DrawHand(handRight, _sensor.CoordinateMapper);
                                 canvas.DrawHand(handLeft, _sensor.CoordinateMapper);
 
-                                if (imagecapture == true)
-                                {
+                                //if (imagecapture == true)
+                                //{
 
-                                    //DepthSpacePoint testLeftArm = this.coordinateMapper.MapCameraPointToDepthSpace(body.Joints[JointType.HandLeft].Position);
+                                //DepthSpacePoint testLeftArm = this.coordinateMapper.MapCameraPointToDepthSpace(body.Joints[JointType.HandLeft].Position);
                                 //    float LeftZarm = body.Joints[JointType.HandLeft].Position.Z;
-                                    tblRightHandState.Text = string.Format("( { 0:0.00}, { 1:0.00} ,{ 2:0.00} )", body.Joints[JointType.HandLeft].Position.X, body.Joints[JointType.HandLeft].Position.Y, body.Joints[JointType.HandLeft].Position.Z);
+                                // tblRightHandState.Text = string.Format("( { 0:0.00}, { 1:0.00} ,{ 2:0.00} )", body.Joints[JointType.HandLeft].Position.X, body.Joints[JointType.HandLeft].Position.Y, body.Joints[JointType.HandLeft].Position.Z);
 
-                                    imagecapture = false;
+                
+                                string rightHandState = "-";
+                                switch (body.HandRightState)
+                                {
+                                    case HandState.Open:
+                                        rightHandState = "Open";
+                                        break;
+
+                                    case HandState.Closed:
+                                        rightHandState = "Closed";
+                                        //    if (camera.Source != null)
+                                        //   {
+                                        #region 1st_Posture
+                                        string query = "call createpostureandgetid" +
+                                            "(" + body.Joints[JointType.SpineShoulder].Position.X * 10000 +
+                                            " , " + body.Joints[JointType.SpineShoulder].Position.Y * 10000 +
+                                            " , " + body.Joints[JointType.SpineBase].Position.X * 10000 +
+                                            " , " + body.Joints[JointType.SpineBase].Position.Y * 10000 + ");";
+                                        db.setCommand(query);
+                                        #endregion
+
+                                        #region 2nd_JointPoint
+                                        if (db.ExecQueryWithAnswer() != null)
+                                        {
+                                            db.getDataReader().Read();
+
+                                            Console.WriteLine("Level 1 Complete.");
+
+                                            int postureId = (int)db.getDataReader()["postureId"];
+                                            Console.WriteLine("{0}", postureId);
+
+                                            for (int i = 0; i < 25; i++)
+                                            {
+                                                string query2 = "call insertjointtoposture" +
+                                                "( " + postureId + " " +
+                                                " , " + i +
+                                                " , " + body.Joints[(JointType)i].Position.X * 10000 +
+                                                " , " + body.Joints[(JointType)i].Position.Y * 10000 +
+                                                " , " + body.Joints[(JointType)i].Position.Z * 10000 + ");";
+
+                                                db.setCommand(query2);
+                                                db.ExecQueryDirect(); //
+                                            }
+                                            Console.WriteLine("Level 2 Complete.");
+                                            #endregion
+
+                                            #region 3rd_Image
+                                            BitmapEncoder encoder = new PngBitmapEncoder();
+                                            BitmapSource image = (BitmapSource)camera.Source;
+                                            // create frame from the writable bitmap and add to encoder
+                                            encoder.Frames.Add(BitmapFrame.Create(image));
+                                            string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
+                                            string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+                                            string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
+
+                                            FileStream fs;
+                                            BinaryReader br;
+
+                                            using (fs = new FileStream(path, FileMode.Create))
+                                            
+
+                                        
+                                            br = new BinaryReader(fs);
+
+                                            byte[] imageData = br.ReadBytes((int)fs.Length);
+                                            //encoder.Save(fs);
+
+                                            query = "call insertpostureimage(" + postureId + " , @Image);";
+
+                                            db.setCommand(query);
+                                            db.setParams_InsertPostureImage(imageData);
+
+                                            int RowsAffected = db.ExecQuery_withImage();
+
+                                            if (RowsAffected > 0)
+                                            { Console.WriteLine("성공적으로 저장되었습니다."); }
+                                            else
+                                            { Console.WriteLine("오류가 발생하였습니다."); }
+
+                                            #endregion
+                                        }
+                                        else
+                                        {
+                                            //Error
+                                        }
+
+                                        imagecapture = false;
+
+
+
+
+                                        break;
+                                        }
+                                        //}
                                 }
-
-
                             }
-                        }
                     }
                 }
             }
         }
 
         #endregion
-
-        int a;
-
 
         public ImageSource ImageSource
         {
@@ -157,102 +256,14 @@ namespace ProjectKinect
             }
         }
 
-        public void Screenshot_Click(object sender, RoutedEventArgs e)
+        public void Screenshot_Click(object sender, RoutedEventArgs e) // 1. 스켈레톤 받아오기
         {
             DBon();
 
-            if (camera.Source != null)
-            {
-                BitmapEncoder encoder = new PngBitmapEncoder();
-                BitmapSource image = (BitmapSource)camera.Source;
-                // create frame from the writable bitmap and add to encoder
-                encoder.Frames.Add(BitmapFrame.Create(image));
-                string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
-
-                string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
-                string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
-
-                FileStream fs;
-                BinaryReader br;
-
-                using (fs = new FileStream(path, FileMode.Create))
-                {
-                    encoder.Save(fs);
-                }
-
-                fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-                //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-                br = new BinaryReader(fs);
-
-                byte[] imageData = br.ReadBytes((int)fs.Length);
-                //encoder.Save(fs);
-
-                int dum_posId = 2;
-                //임시로 이름 / postureId 등이 저장되어 있음
-
-                string query = "call insertpostureimage(" + dum_posId + " , @Image);";
-
-                db.setCommand(query);
-                db.setParams_InsertPostureImage(imageData);
-
-                // db.getCommand().Parameters.Add("@Image", MySqlDbType.LongBlob);
-                // db.getCommand().Parameters["@Image"].Value = ImageData;
-
-                int RowsAffected = db.ExecQuery_withImage(query);
-
-                if (RowsAffected > 0)
-                { Console.WriteLine("성공적으로 저장되었습니다."); }
-                else
-                { Console.WriteLine("오류가 발생하였습니다."); }
-            }
             imagecapture = true;
-            //if (camera.Source != null)
-            //{
-            //    BitmapEncoder encoder = new PngBitmapEncoder();
-            //    BitmapSource image = (BitmapSource)camera.Source;
-            //    // create frame from the writable bitmap and add to encoder
-            //    encoder.Frames.Add(BitmapFrame.Create(image));
-            //    string time = System.DateTime.Now.ToString("hh'-'mm'-'ss", CultureInfo.CurrentUICulture.DateTimeFormat);
-
-            //    string myPhotos = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-
-            //    string path = Path.Combine(myPhotos, "KinectScreenshot-Color-" + time + ".png");
-
-            //    using (FileStream fs = new FileStream(path, FileMode.Create))
-            //    {
-            //        encoder.Save(fs);
-            //    }
-
-            //    fs = new FileStream(path, FileMode.Open, FileAccess.Read);
-            //    //fs = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-            //    br = new BinaryReader(fs);
-
-            //    ImageData = br.ReadBytes((int)fs.Length);
-            //    //encoder.Save(fs);
-
-            //    string dum_name = "옷이라능";
-            //    string dum_cat = "하의";
-            //    int dum_posId = 1;
-            //    //임시로 이름 / postureId 등이 저장되어 있음
-
-            //    string query = "call insertpostureimage(" + dum_posId + " , @Image)";
-
-            //    cmd.Parameters.Add("@Image", MySqlDbType.LongBlob);
-            //    cmd.Parameters["@Image"].Value = ImageData;
-
-            //    if (Database.ExecQuery_withImage(query))
-            //    {
-            //        Console.WriteLine("성공적으로 저장되었습니다.");
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine("오류가 발생하였습니다.");
-            //    }
-
-            //}
-            //imagecapture = true;
         }
+
+    
 
         public void DBon()
         {
@@ -260,4 +271,14 @@ namespace ProjectKinect
                 db = new Database();
         }
     }
+ 
 }
+
+
+//Posture.cs
+
+
+
+
+
+//이건 Database.cs에 넣으시면 됩니다.

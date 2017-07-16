@@ -41,7 +41,8 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
         private static Uri darkGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
         private static Uri mediumGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
         private static Uri lightGrayImage = new Uri("/Tracking/Assets/t.jpg", UriKind.Relative);
-
+        public int i=1;
+        public int j = 1;
         public SampleDataSource()
         {
             Database database = new Database();
@@ -50,6 +51,7 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                                     "Item Content: {0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}\n\n{0}",
                                     "Curabitur class aliquam vestibulum nam curae maecenas sed integer cras phasellus suspendisse quisque donec dis praesent accumsan bibendum pellentesque condimentum adipiscing etiam consequat vivamus dictumst aliquam duis convallis scelerisque est parturient ullamcorper aliquet fusce suspendisse nunc hac eleifend amet blandit facilisi condimentum commodo scelerisque faucibus aenean ullamcorper ante mauris dignissim consectetuer nullam lorem vestibulum habitant conubia elementum pellentesque morbi facilisis arcu sollicitudin diam cubilia aptent vestibulum auctor eget dapibus pellentesque inceptos leo egestas interdum nulla consectetuer suspendisse adipiscing pellentesque proin lobortis sollicitudin augue elit mus congue fermentum parturient fringilla euismod feugiat");
             List<ImageSource> imgList = database.getImage();
+            List<ImageSource> imgList2 = database.getImage("select image from gallery");
 
             var group1 = new SampleDataCollection(
                     "Group-1",
@@ -59,23 +61,51 @@ namespace Microsoft.Samples.Kinect.ControlsBasics.DataModel
                     imgList.First(),
                     "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
 
+            var group2 = new SampleDataCollection(
+                    "Group-2",
+                    "Group Title: 3",
+                    "Group Subtitle: 3",
 
+                    imgList2.First(),
+                    "Group Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor scelerisque lorem in vehicula. Aliquam tincidunt, lacus ut sagittis tristique, turpis massa volutpat augue, eu rutrum ligula ante a ante");
 
             foreach (ImageSource imgSource in imgList)
             {
-
+              //  string postureid = i.ToString();
                 group1.Items.Add(
                   new SampleDataItem(
-                      "Group-1-Item-",
+                       i++.ToString(),
                       "Buttons",
                       string.Empty,
                       imgSource,
                       "Several types of buttons with custom styles",
                       itemContent,
                       group1,
-                      typeof(ButtonSample)));
+                      typeof(ButtonSample))
+                      
+                      );
+              
             }
             this.AllGroups.Add(group1);
+
+            foreach (ImageSource imgSource in imgList2)
+            {
+                group2.Items.Add(
+                  new SampleDataItem(
+                      j++.ToString(),
+                      "Buttons",
+                      string.Empty,
+                      imgSource,
+                      "Several types of buttons with custom styles",
+                      itemContent,
+                      group2,
+                      typeof(ButtonSample)));
+            }
+            this.AllGroups.Add(group2);
+
+            
+
+
         }
 
         public ObservableCollection<SampleDataCollection> AllGroups

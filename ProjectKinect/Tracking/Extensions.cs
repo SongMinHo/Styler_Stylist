@@ -193,6 +193,26 @@ namespace ProjectKinect.HandTracking
             canvas.Children.Add(ellipse);
         }
 
+        public static void RedDrawHand(this Canvas canvas, Joint hand, CoordinateMapper mapper)
+        {
+            if (hand.TrackingState == TrackingState.NotTracked) return;
+
+            Point point = hand.Scale(mapper);
+
+            Ellipse ellipse = new Ellipse
+            {
+                Width = 100,
+                Height = 100,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 4
+            };
+
+            Canvas.SetLeft(ellipse, point.X - ellipse.Width / 2);
+            Canvas.SetTop(ellipse, point.Y - ellipse.Height / 2);
+
+            canvas.Children.Add(ellipse);
+        }
+
         public static void DrawThumb(this Canvas canvas, Joint thumb, CoordinateMapper mapper)
         {
             if (thumb.TrackingState == TrackingState.NotTracked) return;

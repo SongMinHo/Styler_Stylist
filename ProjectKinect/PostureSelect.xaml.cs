@@ -35,7 +35,7 @@ namespace ProjectKinect
             this.kinectRegion.KinectSensor = KinectSensor.GetDefault();
 
             //// Add in display content
-            var sampleDataSource = SampleDataSource.GetGroup("Group-1");
+            var sampleDataSource = SampleDataSource.GetGroup("Group-2");
             this.itemsControl.ItemsSource = sampleDataSource;
         }
 
@@ -48,18 +48,27 @@ namespace ProjectKinect
         {
             var button = (Button)e.OriginalSource;
             SampleDataItem sampleDataItem = button.DataContext as SampleDataItem;
-
             if (sampleDataItem != null && sampleDataItem.NavigationPage != null)
             {
                 MyValue = sampleDataItem.ImageSource;
+                string postureid = sampleDataItem.UniqueId;
 
-                Console.WriteLine(MyValue.ToString());
+
+                postureId = sampleDataItem.UniqueId;
+                Console.WriteLine(postureId.ToString());
+                //Console.WriteLine(MyValue.ToString());
+
+
                 this.Close();
+
+
+
                 //this.Close();
           //      this.navigationRegion.
             //    backButton.Visibility = System.Windows.Visibility.Visible;
             //    navigationRegion.Content = Activator.CreateInstance(sampleDataItem.NavigationPage);
             }
+
             else
             {
                 this.kinectRegion.InputPointerManager.CompleteGestures();
@@ -75,8 +84,7 @@ namespace ProjectKinect
         /// <param name="e">Event arguments</param>
         private void GoBack(object sender, RoutedEventArgs e)
         {
-            backButton.Visibility = System.Windows.Visibility.Hidden;
-            navigationRegion.Content = this.kinectRegionGrid;
+          this.Close();
         }
 
         private ImageSource _myValue;
@@ -86,7 +94,15 @@ namespace ProjectKinect
             get { return _myValue; }
             set { _myValue = value; }
         }
-               
+
+        private string _postureid;
+        public string postureId
+        {
+            get { return _postureid; }
+            set { _postureid = value; }
+        }
+
+
     }
 
 }

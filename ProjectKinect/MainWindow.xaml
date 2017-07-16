@@ -29,8 +29,8 @@
                         </Grid.RowDefinitions>
                         <Button x:Name="test" Content="자세 찍기
                 " HorizontalAlignment="Left" Margin="421,361.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click" Height="18" Grid.Row="1" Grid.Column="1"/>
-                        <Button Content="옷 사진 찍기" HorizontalAlignment="Left" Margin="421,530.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_1" Height="21" Grid.Row="1" Grid.Column="1"/>
-                        <Button Content="옷 고르기" HorizontalAlignment="Left" Margin="421,773.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_2" Height="21" Grid.Row="1" Grid.Column="1"/>
+                        <Button Content="옷 사진 찍기" HorizontalAlignment="Left" Margin="430.2,409.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_1" Height="21" Grid.Row="1" Grid.Column="1"/>
+                        <Button Content="옷 고르기" HorizontalAlignment="Left" Margin="421.2,588.2,0,0" VerticalAlignment="Top" Width="84" Click="Button_Click_2" Height="21" Grid.Row="1" Grid.Column="1"/>
                         <TextBlock x:Name="Date"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="506" Margin="40,35,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="36"/>
                         <TextBlock x:Name="Time"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="292" Margin="40,109.2,0,0" Grid.ColumnSpan="2" FontSize="48" Grid.Row="1" TextDecorations="{x:Null}"/>
                         <TextBlock x:Name="Dayofweek" Margin="55,34.2,741.6,1721.4" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Stretch" Foreground="White" RenderTransformOrigin="0.19,-1.212" Grid.Row="1" FontSize="48" TextAlignment="Center" Grid.ColumnSpan="2"/>
