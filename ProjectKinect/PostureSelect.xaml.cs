@@ -52,9 +52,9 @@ namespace ProjectKinect
             if (sampleDataItem != null && sampleDataItem.NavigationPage != null)
             {
                 MyValue = sampleDataItem.ImageSource;
-
+                Console.WriteLine(sampleDataItem.UniqueId);
                 Console.WriteLine(MyValue.ToString());
-                this.Close();
+                //this.Close();
                 //this.Close();
           //      this.navigationRegion.
             //    backButton.Visibility = System.Windows.Visibility.Visible;

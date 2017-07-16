@@ -6,8 +6,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectKinect"
         mc:Ignorable="d"
-       Title="Controls Basics"
-      
+       Title="Controls Basics"  
+        Background="Black"
          d:DesignWidth="1080"
         d:DesignHeight="1920"
         MinWidth="500"
@@ -31,9 +31,8 @@
 
                 <Button x:Name="backButton" Visibility="Hidden" Grid.Column="0" Style="{StaticResource BackButtonStyle}" Click="GoBack" />
 
-                <Image Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Source="Images\Logo.png" Stretch="None" Margin="0 0 0 4"/>
-                <k:KinectUserViewer Grid.Column="1" Height="100" HorizontalAlignment="Center" VerticalAlignment="Top" />
-                <TextBlock Grid.Column="1" HorizontalAlignment="Right" Margin="0 0 -1 0" VerticalAlignment="Bottom" Foreground="{StaticResource MediumGreyBrush}" FontSize="18">Controls Basics</TextBlock>
+                <Image x:Name="Posture" HorizontalAlignment="Left" VerticalAlignment="Center" Source="Images\styler.png" Stretch="None" Margin="811.8,38,0,47.2" RenderTransformOrigin="14.258,-0.206" Grid.Column="1" Height="46" Width="45"/>
+                <TextBlock HorizontalAlignment="Right" Margin="0,0,10.6,40.2" VerticalAlignment="Bottom" Foreground="White" FontSize="36" FontFamily="Gabriola" Grid.Column="1">Styler</TextBlock>
             </Grid>
 
             <ContentControl Grid.Row="1" x:Name="navigationRegion">

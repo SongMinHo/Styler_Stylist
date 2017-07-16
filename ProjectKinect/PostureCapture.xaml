@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjectKinect"
         mc:Ignorable="d"
-        Title="PostureCapture" Height="1920" Width="1080" Loaded="Window_Loaded" Closed="Window_Closed">
+        Title="PostureCapture" Height="1920" Width="1080" Loaded="Window_Loaded" Closed="Window_Closed" Background="Black">
     <Grid>
         <Viewbox>
             <Grid Width="1920" Height="1080">
