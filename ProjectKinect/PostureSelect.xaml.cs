@@ -53,7 +53,7 @@ namespace ProjectKinect
             {
                 MyValue = sampleDataItem.ImageSource;
                 Console.WriteLine(sampleDataItem.UniqueId);
-                Console.WriteLine(MyValue.ToString());
+                this.Close();
                 //this.Close();
                 //this.Close();
           //      this.navigationRegion.
