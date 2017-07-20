@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE `InsertJointToPosture`(input_postureId int, input_joint int, input_x double, input_y double, input_z double)
+BEGIN
+	insert into jointpoint values(input_postureId, input_joint, input_x, input_y, input_z);
+END

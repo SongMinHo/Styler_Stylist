@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE `GetClothesImage`(input_postureId int)
+BEGIN
+	select category, image from clothesposture where postureId = input_postureId;
+END

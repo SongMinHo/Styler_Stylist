@@ -1,0 +1,4 @@
+﻿CREATE PROCEDURE `InsertPostureImage`(input_postureId int, input_image longblob)
+BEGIN
+	insert into gallery(postureId, image) values(input_postureId, input_image);
+END

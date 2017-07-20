@@ -1,0 +1,5 @@
+﻿CREATE PROCEDURE `CreatePostureAndGetId`()
+BEGIN
+	insert into posture values();
+	select postureId from posture order by postureId desc limit 1;
+END
