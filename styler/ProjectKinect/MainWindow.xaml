@@ -1,0 +1,59 @@
+﻿<Window WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized" 
+        x:Class="ProjectKinect.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        
+         xmlns:k="http://schemas.microsoft.com/kinect/2014"
+
+        xmlns:local="clr-namespace:ProjectKinect"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1920" Width="1080" Background="Black" BorderThickness="0" Visibility="Visible" >
+    <k:KinectRegion x:Name="kinectRegion">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="640"/>
+                <RowDefinition Height="1280"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500*"/>
+                <ColumnDefinition Width="230*"/>
+                <ColumnDefinition Width="450*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock x:Name="Date"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="400" Margin="40,35,0,0" FontSize="45" Grid.Row="0" Grid.Column="0" />
+            <TextBlock x:Name="Dayofweek" Margin="40,100,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" Text="TextBox" VerticalAlignment="Top" Foreground="White" RenderTransformOrigin="0.19,-1.212" Grid.Row="0" Grid.Column="0" FontSize="60" TextAlignment="Center" />
+            <TextBlock x:Name="Time"  HorizontalAlignment="Left" VerticalAlignment="Top" Text="TextBox" Foreground="White" Width="400" Height="200" Margin="40,200,0,0" Grid.Row="0" Grid.Column="0" FontSize="55" TextDecorations="{x:Null}"/>
+
+            <Image x:Name="ImgWeather" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Height="250" Width="250" VerticalAlignment="Top"  Margin="0,35,0,0"/>
+            <TextBlock x:Name="CurrentTemp" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Margin="300,130,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="-0.326,0.186" Height="76" Width="104" Foreground="White" FontSize="48"/>
+            <TextBlock x:Name="MinTemp" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Margin="10,320,0,0" TextWrapping="Wrap" Text="MinT" VerticalAlignment="Top" Width="100" Foreground="White" FontSize="30"/>
+            <TextBlock x:Name="MaxTemp" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Margin="130,320,0,0" TextWrapping="Wrap" Text="MaxT" VerticalAlignment="Top" Width="100" Foreground="White" FontSize="30"/>
+            <TextBlock x:Name="Wind" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" Margin="250,320,0,0" Text="Wind:" VerticalAlignment="Top" Width="100" Foreground="White" FontSize="30"/>
+
+            <TextBlock Text="최저" Margin="0,0,0,0"  Grid.Row="0" Grid.Column="3" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
+            <TextBlock Text="최고" Margin="120,0,0,0" Grid.Row="0" Grid.Column="3" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
+            <TextBlock Text="현재기온" HorizontalAlignment="Left" Margin="290,0,0,360"  Grid.Row="0" Grid.Column="3" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
+            <TextBlock Text="풍속" Margin="240,0,0,0"  Grid.Row="0" Grid.Column="3" FontSize="14" Foreground="White" Height="30" RenderTransformOrigin="0.479,0.559" FontFamily="Yu Gothic"/>
+            
+            <ContentControl Grid.Row="1" x:Name="navigationRegion" Margin="0,0,0,0" Grid.ColumnSpan="3">
+                <Grid x:Name="kinectRegionGrid" Height="1280" Width="1080">
+
+                    <Button x:Name="MyPose" Content="My Pose" HorizontalAlignment="Right" Margin="0, 30, 0, 0" VerticalAlignment="Top" Width="200" Click="Button_Click" Height="100"/>
+                    <Button Name="ClothesMatching" Content="Virtual Fitting" HorizontalAlignment="Right" Margin="0, 140, 0, 0" VerticalAlignment="Top" Width="200" Click="Button_Click_1" Height="100"/>
+                    <Button Name="ClothesShot" Content="Clothes Shot" HorizontalAlignment="Right" Margin="0, 250, 0, 0" VerticalAlignment="Top" Width="200" Click="Button_Click_2" Height="100"/>
+                    
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,450,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="- 음성명령어" VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,475,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="소개 : 안내 " VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,500,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="포즈 : My Pose " VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,525,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="피팅 : Virtual Fitting " VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,550,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="옷등록 : 옷 정보 등록 " VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                    <TextBlock Foreground="White" FontSize="18" Margin="0,575,0,0"  HorizontalAlignment="Right" Width="200" Height="600" TextWrapping="Wrap" Text="포즈촬영 : 나만의 포즈 " VerticalAlignment="Top" FontFamily="Yu Gothic" />
+                </Grid>
+            </ContentControl>
+           
+        </Grid>
+    </k:KinectRegion>
+</Window>
